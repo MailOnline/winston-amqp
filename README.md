@@ -7,7 +7,7 @@ Installation
 ------------
 
 	npm install winston
-	npm install winston-amqp
+	npm install amqp-winston
 	
 Usage
 -----
