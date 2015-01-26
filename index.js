@@ -121,10 +121,10 @@ AMQP.prototype.log = function (level, msg, meta, callback) {
 	// then callback indicating success.
 	if (typeof meta === 'function') {
 		callback = meta;
-		meta = null;
+		meta = undefined;
 	}
 	
-	if (Object.keys(meta).length==0)
+	if (meta && Object.keys(meta).length==0)
 		meta = undefined ;
 	
 	if (!publish) {
