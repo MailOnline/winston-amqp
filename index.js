@@ -123,7 +123,10 @@ AMQP.prototype.log = function (level, msg, meta, callback) {
 		callback = meta;
 		meta = null;
 	}
-	 
+	
+	if (Object.keys(meta).length==0)
+		meta = undefined ;
+	
 	if (!publish) {
 		buffer.push({logger:this,args:[level,msg,meta]}) ;
 		callback && callback(null, true);
@@ -131,8 +134,7 @@ AMQP.prototype.log = function (level, msg, meta, callback) {
 	else {
 		var o = {
 			level:level,
-			message:msg,
-			meta:meta
+			message:msg
 		} ;
 		if (meta)
 			o.meta = meta ;
