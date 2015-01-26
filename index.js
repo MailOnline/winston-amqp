@@ -34,7 +34,7 @@ function assign(d,s) {
  * 		exchange	String
  * 		exchangeOptions	
  */ 
-var AMQP = winston.transports.AMQP = function (options) {
+var AMQP = module.exports = winston.transports.AMQP = function (options) {
 	winston.Transport.call(this, options);
 	 
 	var self = this ;
@@ -121,7 +121,7 @@ AMQP.prototype.log = function (level, msg, meta, callback) {
 	// then callback indicating success.
 	if (typeof meta === 'function') {
 		callback = meta;
-		meta = {};
+		meta = null;
 	}
 	 
 	if (!publish) {
@@ -129,10 +129,13 @@ AMQP.prototype.log = function (level, msg, meta, callback) {
 		callback && callback(null, true);
 	}
 	else {
-		publish({
+		var o = {
 			level:level,
-			msg:msg,
+			message:msg,
 			meta:meta
-		},callback) ;
+		} ;
+		if (meta)
+			o.meta = meta ;
+		publish(o,callback) ;
 	}
 };
