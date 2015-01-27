@@ -12,7 +12,11 @@ var publish,buffer = [] ;
 var host = require('os').hostname ;
 
 function getProcessName() {
-	return require.main.filename.split(path.sep).slice(-2).join(path.sep) ;
+	try {
+		return require(path.resolve(require.main.filename,".."+path.sep+"package.json")).name ;
+	} catch (ex) {
+		return "process-"+process.pid ;
+	}
 };
 
 var winston = require('winston');

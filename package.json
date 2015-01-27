@@ -1,6 +1,6 @@
 {
   "name": "amqp-winston",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Winston logging transport for AMQP",
   "main": "index.js",
   "scripts": {
