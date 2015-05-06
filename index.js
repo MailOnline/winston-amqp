@@ -40,7 +40,6 @@ function assign(d,s) {
  */ 
 var AMQP = module.exports = winston.transports.AMQP = function (options) {
 	winston.Transport.call(this, options);
-	 
 	var self = this ;
 	var config = {
 			name:getProcessName(),
@@ -72,6 +71,12 @@ var AMQP = module.exports = winston.transports.AMQP = function (options) {
 	this.name = config.name ;
 	// Set the level from your options
 	this.level = config.level ;
+
+	if (!options.enabled) {
+		this.log = this.logWhenDisabled ;
+		return ;
+	}
+	 
 
 	// Configure your storage backing as you see fit
 	var connection = amqp.createConnection({
@@ -119,6 +124,15 @@ var AMQP = module.exports = winston.transports.AMQP = function (options) {
 //of the base functionality and `.handleExceptions()`.
 
 util.inherits(AMQP, winston.Transport);
+
+AMQP.prototype.logWhenDisabled = function(level, msg, meta, callback) {
+	// Logger is disabled
+	if (typeof meta === 'function') {
+		callback = meta;
+		meta = undefined;
+	}
+	callback(null, true);
+}
 
 AMQP.prototype.log = function (level, msg, meta, callback) {
 	// Store this message and metadata, maybe use some custom logic
