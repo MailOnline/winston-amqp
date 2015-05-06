@@ -43,7 +43,9 @@ var AMQP = module.exports = winston.transports.AMQP = function (options) {
 	var self = this ;
 	var config = {
 			name:getProcessName(),
+			bufferMax:1000,
 			level:'debug',
+			enabled:true,
 			host:process.env.WINSTON_AMQP || 'amqp://guest:guest@rabbit-logger:5672/winston/winston',
 			exchangeOptions:{
 				type: 'direct',
@@ -71,8 +73,9 @@ var AMQP = module.exports = winston.transports.AMQP = function (options) {
 	this.name = config.name ;
 	// Set the level from your options
 	this.level = config.level ;
+	this.bufferMax = config.bufferMax ;
 
-	if (!options.enabled) {
+	if (!config.enabled) {
 		this.log = this.logWhenDisabled ;
 		return ;
 	}
@@ -147,7 +150,12 @@ AMQP.prototype.log = function (level, msg, meta, callback) {
 	
 	if (!publish) {
 		buffer.push({logger:this,args:[level,msg,meta]}) ;
-		callback && callback(null, true);
+		if (this.bufferMax < buffer.length) {
+			buffer.splice(0,(buffer.length/2)|1) ;
+			callback && callback(new Error("Winston AMQP transport: failed to connect"));
+		} else {
+			callback && callback(null, true);
+		}
 	}
 	else {
 		var o = {
