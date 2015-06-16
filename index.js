@@ -63,7 +63,7 @@ var AMQP = module.exports = winston.transports.AMQP = function (options) {
 	if (typeof config.host==='string')
 		config.host = URL.parse(config.host) ;
 	if (config.host.protocol!=='amqp:')
-		throw new Error("Incorrect protocol "+config.protocol) ;
+		throw new Error("Incorrect protocol "+config.host.protocol) ;
 	if (!config.exchange)
 		config.exchange = config.host.pathname.split("/")[1] || 'winston';
 	if (!config.routingKey)
