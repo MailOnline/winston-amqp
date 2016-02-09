@@ -18,7 +18,7 @@ Usage
 	// Requiring `winston-amqp` will expose 
 	// `winston.transports.AMQP`
 	//
-	require('ampq-winston');
+	require('amqp-winston');
 	
 	winston.add(winston.transports.AMQP, options);
 	
