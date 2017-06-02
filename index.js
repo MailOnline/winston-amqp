@@ -82,6 +82,7 @@ var AMQP = module.exports = winston.transports.AMQP = function (options) {
 	 
 
 	// Configure your storage backing as you see fit
+	config.host.port = config.host.port || 5672
 	var connection = amqp.createConnection(config.host);
 
 	connection.on('ready', function () {
