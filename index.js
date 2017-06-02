@@ -46,7 +46,7 @@ var AMQP = module.exports = winston.transports.AMQP = function (options) {
 			bufferMax:1000,
 			level:'debug',
 			enabled:true,
-			host:process.env.WINSTON_AMQP || 'amqp://guest:guest@rabbit-logger:5672/winston/winston',
+			host: process.env.WINSTON_AMQP || 'amqp://guest:guest@rabbit-logger:5672/winston/winston',
 			exchangeOptions:{
 				type: 'direct',
 				durable: true,
@@ -85,8 +85,8 @@ var AMQP = module.exports = winston.transports.AMQP = function (options) {
 	var connection = amqp.createConnection({
 		host: config.host.hostname,
 		port: config.host.port,
-		login: config.host.auth.split(":")[0],
-		password: config.host.auth.split(":")[1]
+		login: config.host.auth ? config.host.auth.split(":")[0] : 'guest',
+		password: config.host.auth ? config.host.auth.split(":")[1] : 'guest'
 	});
 
 	connection.on('ready', function () {
