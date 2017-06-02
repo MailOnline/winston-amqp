@@ -15,7 +15,7 @@ Usage
 	var winston = require('winston');
 
 	//
-	// Requiring `winston-amqp` will expose 
+	// Requiring `amqp-winston` will expose 
 	// `winston.transports.AMQP`
 	//
 	require('amqp-winston');
