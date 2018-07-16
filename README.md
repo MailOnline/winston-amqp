@@ -1,6 +1,8 @@
 Winston AMQP
 ============
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/MailOnline/winston-amqp.svg)](https://greenkeeper.io/)
+
 A transport for Winston [https://www.npmjs.com/package/winston] which sends logging events to an AMQP-capable host, such as RabbitMQ.
 
 Installation
