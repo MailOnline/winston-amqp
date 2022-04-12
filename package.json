@@ -16,7 +16,7 @@
   "license": "ISC",
   "dependencies": {
     "amqp": "^0.2.0",
-    "winston": "^0.9.0"
+    "winston": "^3.3.0"
   },
   "devDependencies": {},
   "repository": {
